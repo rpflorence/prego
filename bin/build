@@ -1,0 +1,11 @@
+#!/bin/sh
+# Run this from the root of the project
+
+# precompiled handlebars templates
+compile-templates > app/build/templates.js
+
+# trace dependencies and concat deps
+node_modules/requirejs/bin/r.js -o config/build-dev.js
+
+# make my life sane by just dumping the global deps
+cat app/js/vendor/jquery-1.7.2.js app/js/vendor/handlebars-1.0.0.beta.6.js app/js/vendor/ember-1.0.pre.js app/build/templates.js app/build/main.js > app/build/app.js

@@ -1,0 +1,8 @@
+#!/usr/bin/env node
+fs = require('fs');
+compile = require('ember-precompile');
+fs.readdir('app/templates', function(err, fileList) {
+  fileList.forEach(function(template){
+    console.log( compile('app/templates/' + template) );
+  });
+});

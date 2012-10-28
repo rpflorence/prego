@@ -1,0 +1,9 @@
+{
+  "name": "prego",
+  "version": "0.0.0pre",
+  "dependencies": {
+    "ember-precompile": "*",
+    "requirejs": "*",
+    "almond": "*"
+  }
+}
