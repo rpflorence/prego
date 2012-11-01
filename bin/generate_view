@@ -1,0 +1,14 @@
+#!/bin/sh
+
+echo "module.exports = Ember.Controller.extend();" \
+  > app/js/controllers/$1Controller.js
+echo "Created: app/js/controllers/$1Controller.js"
+
+echo "module.exports = Ember.View.extend({
+  template: Ember.TEMPLATES['$1']
+});
+" > app/js/views/$1View.js
+echo "Created: app/js/views/$1View.js"
+
+touch app/templates/$1.handlebars
+echo "Created: app/templates/$1.handlebars"

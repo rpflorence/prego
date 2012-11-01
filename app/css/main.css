@@ -35,7 +35,7 @@ small {
   font-family: Monaco;
 }
 
-#start {
+#start, #stop {
   float: right;
   width: 65%;
   font-family: helvetica;
@@ -106,7 +106,7 @@ tbody tr:last-child {
   border-bottom: none;
 }
 
-#start {
+#start, #stop {
   -webkit-tap-highlight-color: rgba(0,0,0,0);
   background-color: #7fbf4d;
   background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #7fbf4d), color-stop(100%, #63a62f));
@@ -133,7 +133,7 @@ tbody tr:last-child {
     -webkit-box-shadow: inset 0 0 8px 4px #548c29, 0 1px 0 0 #eeeeee;
     box-shadow: inset 0 0 8px 4px #548c29, 0 1px 0 0 #eeeeee; }
 
-#start.stop {
+#stop {
   background-color: #bf4d4d;
   background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #bf4d4d), color-stop(100%, #a52e2e));
   background-image: -webkit-linear-gradient(top, #bf4d4d, #a52e2e);
@@ -146,7 +146,7 @@ tbody tr:last-child {
   box-shadow: inset 0 1px 0 0 #ca6d6d;
   text-shadow: 0 -1px 0 #902121;
 }
-  #start.stop:active {
+  #stop:active {
     border: 1px solid #992b2b;
     border-bottom: 1px solid #8c2727;
     box-shadow: inset 0 0 8px 4px #8c2929, 0 1px 0 0 #eeeeee; }

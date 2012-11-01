@@ -1,0 +1,9 @@
+<div id="timer">
+  {{#if recording}}
+  <button id="stop" {{action "stop"}}>Stop</button>
+  {{else}}
+  <button id="start" {{action "start"}}>Start</button>
+  {{/if}}
+  <span id="clock">{{total}}</span>
+</div>
+
