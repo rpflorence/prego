@@ -6,6 +6,15 @@
       <th>Since Last <br><small>start to start</small></th>
       <th>Duration <br><small>start to end</small></th>
     </tr>
-    <tbody>{{outlet}}</tbody>
+    <tbody>
+      {{#each reverse}}
+        <tr>
+          <td>{{formattedStart}}</td>
+          <td>{{formattedEnd}}</td>
+          <td>{{frequency}}</td>
+          <td>{{duration}}</td>
+        </tr>
+      {{/each}}
+    </tbody>
   </thead>
 </table>

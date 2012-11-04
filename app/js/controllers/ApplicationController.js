@@ -1,1 +1,4 @@
-module.exports = Ember.Controller.extend();
+require('App');
+require('views/ApplicationView');
+App.ApplicationController = Ember.Controller.extend();
+

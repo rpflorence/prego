@@ -1,6 +1,8 @@
+require('App');
+require('views/TimerView');
 var formatMinutes = require('number/formatMinutes');
 
-module.exports = Ember.ObjectController.extend({
+App.TimerController = Ember.ObjectController.extend({
   total: function() {
     var start = this.get('start') || null;
     var end = this.get('end') || null;
@@ -10,9 +12,8 @@ module.exports = Ember.ObjectController.extend({
 
   record: function() {
     this.set('recording', true);
-
     if (!this.get('start')) { this.set('start', Date.now()); }
-
+    if (!this.get('end')) { this.set('end', Date.now()); }
     var timer = this.get('content');
     this.interval = setInterval(function(){
       timer.set('end', Date.now());
