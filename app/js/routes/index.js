@@ -28,10 +28,10 @@ module.exports = Ember.Route.extend({
       outletName: 'stats',
       context: logs
     });
-    timer.on('didLoad', function() {
-      if (!timer.get('recording')) return;
-      router.get('timerController').record();
-    });
+    //timer.on('didLoad', function() {
+    if (!timer.get('recording')) return;
+    router.get('timerController').record();
+    //});
   },
 
   start: function(router) {

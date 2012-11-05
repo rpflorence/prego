@@ -4,50 +4,49 @@ require('models/Log');
 var formatMinutes = require('number/formatMinutes');
 
 App.StatsController = Ember.ArrayController.extend({
-
-  _lastLog: function() {
+  lastLog: function() {
     var logs = this.get('content');
     if (!logs.length) return null;
     return logs[logs.length - 1];
-  },
+  }.property('content.@each'),
 
-  _getLastProperty: function(prop) {
-    var last = this._lastLog();
-    return last ? last.get(prop) : null;
-  },
+  lastHourFrequency: function() {
+    return formatMinutes(reduceFrequency(this.get('recentLogs')));
+  }.property('recentLogs'),
 
-  _recentLogs: function() {
+  lastHourDuration: function() {
+    return formatMinutes(reduceDuration(this.get('recentLogs')));
+  }.property('recentLogs'),
+
+  meanFrequency: function() {
+    return formatMinutes(reduceFrequency(this.get('content').toArray()));
+  }.property('content.@each'),
+
+  meanDuration: function() {
+    return formatMinutes(reduceDuration(this.get('content')));
+  }.property('recentLogs'),
+
+  recentLogs: function() {
     var logs = this.get('content');
     var hourAgo = Date.now() - 3600000;
     return logs.filter(function(log) {
       return log.get('start') >= hourAgo;
     });
-  },
-
-  lastFrequency: function() {
-    return this._getLastProperty('formattedFrequency');
-  }.property('content.@each'),
-
-  lastDuration: function() {
-    return this._getLastProperty('formattedDuration');
-  }.property('content.@each'),
-
-  lastHourFrequency: function() {
-    var recentLogs = this._recentLogs();
-    var frequency = recentLogs.reverse().reduce(function(mean, log, i) {
-      var frequency = log.get('frequency');
-      if (!frequency) return mean;
-      return (mean + log.get('frequency')) / (i + 1);
-    }, 0);
-    return formatMinutes(frequency);
-  }.property('content.@each'),
-
-  lastHourDuration: function() {
-    var recentLogs = this._recentLogs();
-    var duration = recentLogs.reduce(function(mean, log, i) {
-      return (mean + log.get('duration')) / (i + 1);
-    }, 0);
-    return formatMinutes(duration);
   }.property('content.@each')
 
 });
+
+function reduceFrequency (logs) {
+  return logs.reverse().reduce(function(mean, log, i) {
+    var frequency = log.get('frequency');
+    if (!frequency) return mean;
+    return (mean + log.get('frequency')) / (i + 1);
+  }, 0);
+}
+
+function reduceDuration (logs) {
+  return logs.reduce(function(mean, log, i) {
+    return (mean + log.get('duration')) / (i + 1);
+  }, 0);
+}
+

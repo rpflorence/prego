@@ -46,7 +46,7 @@ module.exports = Ember.Object.extend(Ember.Evented, {
     if (stored) record.setProperties(stored);
 
     record.set('isLoaded', true);
-    record.trigger('didLoad');
+    //record.trigger('didLoad');
     return record;
   },
 
