@@ -3,6 +3,7 @@ require('models/Timer');
 require('controllers/TimerController');
 require('models/Log');
 require('controllers/LogsController');
+require('controllers/StatsController');
 
 module.exports = Ember.Route.extend({
 
@@ -11,23 +12,25 @@ module.exports = Ember.Route.extend({
   connectOutlets: function(router) {
     var appController = router.get('applicationController');
     var timer = App.Timer.find('current');
-
+    var logs = App.Log.findAll();
     appController.connectOutlet({
       outletName: 'timer',
       name: 'timer',
       context: timer
     });
-
-    timer.on('didLoad', function() {
-      if (timer.get('recording')) {
-        router.get('timerController').record();
-      }
-    });
-
     appController.connectOutlet({
       outletName: 'logs',
       name: 'logs',
-      context: App.Log.findAll()
+      context: logs
+    });
+    appController.connectOutlet({
+      name: 'stats',
+      outletName: 'stats',
+      context: logs
+    });
+    timer.on('didLoad', function() {
+      if (!timer.get('recording')) return;
+      router.get('timerController').record();
     });
   },
 

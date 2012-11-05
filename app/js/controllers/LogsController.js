@@ -12,7 +12,7 @@ App.LogsController = Ember.ArrayController.extend({
   },
 
   reverse: function(){
-      return this.get('content').toArray().reverse();
+    return this.get('content').toArray().reverse();
   }.property('content.@each')
 
 });

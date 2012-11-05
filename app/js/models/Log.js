@@ -9,6 +9,18 @@ App.Log = Model.extend({
 
   end: null,
 
+  frequency: function() {
+    var previous = this.findPrevious();
+    if (previous) {
+      return this.get('start') - previous.get('start');
+    }
+    return null;
+  }.property('start'),
+
+  duration: function() {
+    return this.get('end') - this.get('start');
+  }.property('start', 'end'),
+
   formattedStart: function() {
     return formatDate(new Date(this.get('start')));
   }.property('start'),
@@ -17,28 +29,24 @@ App.Log = Model.extend({
     return formatDate(new Date(this.get('end')));
   }.property('end'),
 
-  frequency: function() {
-    var previous = this.constructor.findPrevious(this);
-    if (previous) {
-      return formatMinutes(this.get('start') - previous.get('start'));
-    }
-    return null;
-  }.property('start'),
+  formattedFrequency: function() {
+    return formatMinutes(this.get('frequency'));
+  }.property('frequency'),
 
-  duration: function() {
-    return formatMinutes(this.get('end') - this.get('start'));
-  }.property('start', 'end')
+  formattedDuration: function() {
+    return formatMinutes(this.get('duration'));
+  }.property('duration'),
 
-}).reopenClass({
-
-  findPrevious: function(current) {
-    var index = this._records.indexOf(current);
+  findPrevious: function() {
+    var records = this.constructor._records;
+    var index = records.indexOf(this);
     if (index === 0) {
       return null;
     }
-    return this.find(this._records[index - 1].id);
+    return this.constructor.find(records[index - 1].id);
   }
 
 });
 
 App.Log.init();
+

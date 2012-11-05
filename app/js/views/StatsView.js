@@ -1,4 +1,6 @@
-module.exports = Ember.View.extend({
+require('App');
+
+App.StatsView = Ember.View.extend({
   template: Ember.TEMPLATES['Stats']
 });
 

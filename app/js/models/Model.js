@@ -43,15 +43,10 @@ module.exports = Ember.Object.extend(Ember.Evented, {
     });
 
     var stored = this._storage.get(id);
-    // simulate async
-    setTimeout(function(){
-      if (stored) {
-        record.setProperties(stored);
-      }
-      record.set('isLoaded', true);
-      record.trigger('didLoad');
-    }.bind(this), 1);
+    if (stored) record.setProperties(stored);
 
+    record.set('isLoaded', true);
+    record.trigger('didLoad');
     return record;
   },
 
