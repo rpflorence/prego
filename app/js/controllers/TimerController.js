@@ -1,6 +1,6 @@
 require('App');
 require('views/TimerView');
-var formatMinutes = require('number/formatMinutes');
+var formatMinutes = require('lang/number/formatMinutes');
 
 App.TimerController = Ember.ObjectController.extend({
   total: function() {

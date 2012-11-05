@@ -1,9 +1,10 @@
 require('App');
 require('views/StatsView');
 require('models/Log');
-var formatMinutes = require('number/formatMinutes');
+var formatMinutes = require('lang/number/formatMinutes');
 
 App.StatsController = Ember.ArrayController.extend({
+
   lastLog: function() {
     var logs = this.get('content');
     if (!logs.length) return null;
@@ -11,19 +12,19 @@ App.StatsController = Ember.ArrayController.extend({
   }.property('content.@each'),
 
   lastHourFrequency: function() {
-    return formatMinutes(reduceFrequency(this.get('recentLogs')));
+    return formatMinutes(meanFrequency(this.get('recentLogs')));
   }.property('recentLogs'),
 
   lastHourDuration: function() {
-    return formatMinutes(reduceDuration(this.get('recentLogs')));
+    return formatMinutes(meanDuration(this.get('recentLogs')));
   }.property('recentLogs'),
 
   meanFrequency: function() {
-    return formatMinutes(reduceFrequency(this.get('content').toArray()));
+    return formatMinutes(meanFrequency(this.get('content').toArray()));
   }.property('content.@each'),
 
   meanDuration: function() {
-    return formatMinutes(reduceDuration(this.get('content')));
+    return formatMinutes(meanDuration(this.get('content')));
   }.property('recentLogs'),
 
   recentLogs: function() {
@@ -36,17 +37,21 @@ App.StatsController = Ember.ArrayController.extend({
 
 });
 
-function reduceFrequency (logs) {
-  return logs.reverse().reduce(function(mean, log, i) {
+function meanFrequency (logs) {
+  var sum = 0;
+  var length = 0;
+  logs.forEach(function(log) {
     var frequency = log.get('frequency');
-    if (!frequency) return mean;
-    return (mean + log.get('frequency')) / (i + 1);
-  }, 0);
+    if (!frequency) return;
+    sum += frequency;
+    length++;
+  });
+  return sum / length;
 }
 
-function reduceDuration (logs) {
+function meanDuration (logs) {
   return logs.reduce(function(mean, log, i) {
-    return (mean + log.get('duration')) / (i + 1);
-  }, 0);
+    return mean + log.get('duration');
+  }, 0) / logs.length;
 }
 

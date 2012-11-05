@@ -1,6 +1,6 @@
 require('App');
-var formatDate = require('date/format');
-var formatMinutes = require('number/formatMinutes');
+var formatDate = require('lang/date/format');
+var formatMinutes = require('lang/number/formatMinutes');
 var Model = require('models/Model');
 
 App.Log = Model.extend({
